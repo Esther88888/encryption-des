@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="HexToBinary.js"></script>
+    <script src="Rounds.js"></script>
+    <title> DES خوارزمية تشفير  </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px; }
+        input {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 10px; }
+        button {
+            padding: 10px 20px; }</style></head><body>
+                <h1> المرسل </h1>
+    <h2> DES خوارزمية تشفير  </h2>
+   <label for="hexInput1">المفتاح (64 بت بالست عشري):</label>
+    <input type="text" id="hexInput1" placeholder="ادخل مفتاح التشفير بالست عشري" maxlength="16"><BR>
+    <label for="hexInput2">النص العادي (64 بت بالست عشري):</label>
+    <input type="text" id="hexInput2" placeholder="ادخل النص الصريح بالست العشري" maxlength="16">
+    <button onclick="encryptDES()" >تشفير النص</button>
+    <h3>subkey 1</h3>
+    <p id="subk1"></p>
+    <h3>subkey 2</h3>
+    <p id="subk2"></p>
+    <h3>subkey 3</h3>
+    <p id="subk3"></p>
+    <h3>subkey 4</h3>
+    <p id="subk4"></p>
+    <h3>subkey 5</h3>
+    <p id="subk5"></p>
+    <h3>subkey 6</h3>
+    <p id="subk6"></p>
+    <h3>subkey 7</h3>
+    <p id="subk7"></p>
+    <h3>subkey 8</h3>
+    <p id="subk8"></p>
+    <h3>subkey 9</h3>
+    <p id="subk9"></p>
+    <h3>subkey 10</h3>
+    <p id="subk10"></p>
+    <h3>subkey 11</h3>
+    <p id="subk11"></p>
+    <h3>subkey 12</h3>
+    <p id="subk12"></p>
+    <h3>subkey 13</h3>
+    <p id="subk13"></p>
+    <h3>subkey 14</h3>
+    <p id="subk14"></p>
+    <h3>subkey 15</h3>
+    <p id="subk15"></p>
+    <h3>subkey 16</h3>
+    <p id="subk16"></p>
+    <h3>Cyber Text</h3>
+    <p id="cybertext"></p>
+    <script>
+        function encryptDES() {
+            const keyHex = document.getElementById('hexInput1').value;
+            const plaintextHex = document.getElementById('hexInput2').value;
+            if (keyHex.length === 16 && plaintextHex.length === 16) { } else {
+        alert("يرجى إدخال نص بطول 64 بت ومفتاح بطول 64 بت.");return false; }
+    const hexPattern = /^[0-9A-F]{1,16}$/;
+    if (!hexPattern.test(keyHex)) {
+        alert("يرجى إدخال مفتاح صحيح (حتى 64 بت بالست عشري و بالأحرف الكبيرة).");
+        return false; }
+    if (!hexPattern.test(plaintextHex)) {
+        alert("يرجى إدخال نص عادي صحيح (حتى 64 بت بالست عشري و بالاحرف الكبيرة).");
+        return false; }
+            var pc1= HexToBinary(keyHex);
+            var PC1=[
+                57,49,41,33,25,17,9,
+                1,58,50,42,34,26,18,
+                10,2,59,51,43,35,27,
+                19,11,3,60,52,44,36,
+                63,55,47,39,31,23,15,
+                7,62,54,46,38,30,22,
+                14,6,61,53,45,37,29,
+                21,13,5,28,20,12,4 ]
+            var newpc1="";
+            for(j=0;j<56;j++){
+                var k=PC1[j];
+                newpc1+=pc1[k-1];  }
+          var left=newpc1.slice(0,28);
+           var right=newpc1.slice(28,56);
+        var modshr1=right[0];
+        var shr1=right.slice(1,28);
+        var resshr1=shr1+modshr1;
+        var modshl1=left[0];
+        var shl1=left.slice(1,28);
+        var resshl1=shl1+modshl1;
+        var modshr2=resshr1[0];
+        var shr2=resshr1.slice(1,28);
+        var resshr2=shr2+modshr2;
+        var modshl2=resshl1[0];
+        var shl2=resshl1.slice(1,28);
+        var resshl2=shl2+modshl2;
+        var modshr3=resshr2.slice(0,2);
+        var shr3=resshr2.slice(2,28);
+        var resshr3=shr3+modshr3;
+        var modshl3=resshl2.slice(0,2);
+        var shl3=resshl2.slice(2,28);
+        var resshl3=shl3+modshl3;
+        var modshr4=resshr3.slice(0,2);
+        var shr4=resshr3.slice(2,28);
+        var resshr4=shr4+modshr4;
+        var modshl4=resshl3.slice(0,2);
+        var shl4=resshl3.slice(2,28);
+        var resshl4=shl4+modshl4;
+        var modshr5=resshr4.slice(0,2);
+        var shr5=resshr4.slice(2,28);
+        var resshr5=shr5+modshr5;
+        var modshl5=resshl4.slice(0,2);
+        var shl5=resshl4.slice(2,28);
+        var resshl5=shl5+modshl5;
+        var modshr6=resshr5.slice(0,2);
+        var shr6=resshr5.slice(2,28);
+        var resshr6=shr6+modshr6;
+        var modshl6=resshl5.slice(0,2);
+        var shl6=resshl5.slice(2,28);
+        var resshl6=shl6+modshl6;
+        var modshr7=resshr6.slice(0,2);
+        var shr7=resshr6.slice(2,28);
+        var resshr7=shr7+modshr7;
+        var modshl7=resshl6.slice(0,2);
+        var shl7=resshl6.slice(2,28);
+        var resshl7=shl7+modshl7;
+        var modshr8=resshr7.slice(0,2);
+        var shr8=resshr7.slice(2,28);
+        var resshr8=shr8+modshr8;
+        var modshl8=resshl7.slice(0,2);
+        var shl8=resshl7.slice(2,28);
+        var resshl8=shl8+modshl8;
+        var modshr9=resshr8[0];
+        var shr9=resshr8.slice(1,28);
+        var resshr9=shr9+modshr9;
+        var modshl9=resshl8[0];
+        var shl9=resshl8.slice(1,28);
+        var resshl9=shl9+modshl9;
+        var modshr10=resshr9.slice(0,2);
+        var shr10=resshr9.slice(2,28);
+        var resshr10=shr10+modshr10;
+        var modshl10=resshl9.slice(0,2);
+        var shl10=resshl9.slice(2,28);
+        var resshl10=shl10+modshl10;
+        var modshr11=resshr10.slice(0,2);
+        var shr11=resshr10.slice(2,28);
+        var resshr11=shr11+modshr11;
+        var modshl11=resshl10.slice(0,2);
+        var shl11=resshl10.slice(2,28);
+        var resshl11=shl11+modshl11;
+        var modshr12=resshr11.slice(0,2);
+        var shr12=resshr11.slice(2,28);
+        var resshr12=shr12+modshr12;
+        var modshl12=resshl11.slice(0,2);
+        var shl12=resshl11.slice(2,28);
+        var resshl12=shl12+modshl12;
+        var modshr13=resshr12.slice(0,2);
+        var shr13=resshr12.slice(2,28);
+        var resshr13=shr13+modshr13;
+        var modshl13=resshl12.slice(0,2);
+        var shl13=resshl12.slice(2,28);
+        var resshl13=shl13+modshl13;
+        var modshr14=resshr13.slice(0,2);
+        var shr14=resshr13.slice(2,28);
+        var resshr14=shr14+modshr14;
+        var modshl14=resshl13.slice(0,2);
+        var shl14=resshl13.slice(2,28);
+        var resshl14=shl14+modshl14;
+        var modshr15=resshr14.slice(0,2);
+        var shr15=resshr14.slice(2,28);
+        var resshr15=shr15+modshr15;
+        var modshl15=resshl14.slice(0,2);
+        var shl15=resshl14.slice(2,28);
+        var resshl15=shl15+modshl15;
+        var modshr16=resshr15[0];
+        var shr16=resshr15.slice(1,28);
+        var resshr16=shr16+modshr16;
+        var modshl16=resshl15[0];
+        var shl16=resshl15.slice(1,28);
+        var resshl16=shl16+modshl16;
+        var ts1=resshl1+resshr1;
+        var ts2=resshl2+resshr2;
+        var ts3=resshl3+resshr3;
+        var ts4=resshl4+resshr4;
+        var ts5=resshl5+resshr5;
+        var ts6=resshl6+resshr6;
+        var ts7=resshl7+resshr7;
+        var ts8=resshl8+resshr8;
+        var ts9=resshl9+resshr9;
+        var ts10=resshl10+resshr10;
+        var ts11=resshl11+resshr11;
+        var ts12=resshl12+resshr12;
+        var ts13=resshl13+resshr13;
+        var ts14=resshl14+resshr14;
+        var ts15=resshl15+resshr15;
+        var ts16=resshl16+resshr16;
+            var PC2=[
+                14,17,11,24,1,5,
+                3,28,15,6,21,10,
+                23,19,12,4,26,8,
+                16,7,27,20,13,2,
+                41,52,31,37,47,55,
+                30,40,51,45,33,48,
+                44,49,39,56,34,53,
+                46,42,50,36,29,32 ]
+            var subk1=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk1+=ts1[g-1]; }
+            var subk2=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk2+=ts2[g-1]; }
+            var subk3=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk3+=ts3[g-1];}
+            var subk4="";
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk4+=ts4[g-1];   }
+            var subk5=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk5+=ts5[g-1];}
+            var subk6=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk6+=ts6[g-1]; }
+            var subk7=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk7+=ts7[g-1];}
+             var subk8=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk8+=ts8[g-1];}
+            var subk9=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk9+=ts9[g-1]; }
+            var subk10=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk10+=ts10[g-1];}
+            var subk11=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk11+=ts11[g-1];}
+        var subk12="";
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk12+=ts12[g-1]; }
+             var subk13="";
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk13+=ts13[g-1];}
+            var subk14=""; 
+            for(j=0;j<48;j++){
+                var g=PC2[j];
+                subk14+=ts14[g-1];}
+            var subk15=""; 
+            for(let j=0;j<48;j++){
+                var g=PC2[j];
+                subk15+=ts15[g-1]; }
+            var subk16="";
+            for(let j=0;j<48;j++){
+                var g=PC2[j];
+                subk16+=ts16[g-1];  }
+            document.getElementById("subk1").innerHTML=subk1.toString();
+            document.getElementById("subk2").innerHTML=subk2.toString();
+            document.getElementById("subk3").innerHTML=subk3.toString();
+            document.getElementById("subk4").innerHTML=subk4.toString();
+            document.getElementById("subk5").innerHTML=subk5.toString();
+            document.getElementById("subk6").innerHTML=subk6.toString();
+            document.getElementById("subk7").innerHTML=subk7.toString();
+            document.getElementById("subk8").innerHTML=subk8.toString();
+            document.getElementById("subk9").innerHTML=subk9.toString();
+            document.getElementById("subk10").innerHTML=subk10.toString();
+            document.getElementById("subk11").innerHTML=subk11.toString();
+            document.getElementById("subk12").innerHTML=subk12.toString();
+            document.getElementById("subk13").innerHTML=subk13.toString();
+            document.getElementById("subk14").innerHTML=subk14.toString();
+            document.getElementById("subk15").innerHTML=subk15.toString();
+            document.getElementById("subk16").innerHTML=subk16.toString();
+          var IP=[
+            58,50,42,34,26,18,10,2,
+            60,52,44,36,28,20,12,4,
+            62,54,46,38,30,22,14,6,
+            64,56,48,40,32,24,16,8,
+            57,49,41,33,25,17,9,1,
+            59,51,43,35,27,19,11,3,
+            61,53,45,37,29,21,13,5,
+            63,55,47,39,31,23,15,7
+          ]
+          var text=HexToBinary(plaintextHex);
+            var resip="";
+            for(let j=0;j<64;j++){
+                var n=IP[j];
+                resip+=text[n-1]; }
+          var L0=resip.slice(0,32);
+          var R0=resip.slice(32,64);
+            var R1=Rounds(L0,R0,subk1);
+    var L1=R0;
+    var R2=Rounds(L1,R1,subk2);
+    var L2=R1;
+    var R3=Rounds(L2,R2,subk3);
+    var L3=R2;
+    var R4=Rounds(L3,R3,subk4);
+    var L4=R3;
+    var R5=Rounds(L4,R4,subk5);
+    var L5=R4;									
+    var R6=Rounds(L5,R5,subk6);
+    var L6=R5;
+    var R7=Rounds(L6,R6,subk7);
+    var L7=R6;
+    var R8=Rounds(L7,R7,subk8);
+    var L8=R7;
+    var R9=Rounds(L8,R8,subk9);
+    var L9=R8;
+    var R10=Rounds(L9,R9,subk10);
+    var L10=R9;
+    var R11=Rounds(L10,R10,subk11);
+    var L11=R10;
+    var R12=Rounds(L11,R11,subk12);
+    var L12=R11;
+    var R13=Rounds(L12,R12,subk13);
+    var L13=R12;
+    var R14=Rounds(L13,R13,subk14);
+    var L14=R13;
+    var R15=Rounds(L14,R14,subk15);
+    var L15=R14;
+    var R16=Rounds(L15,R15,subk16);
+    var L16=R15;
+                    var fusion=R16+L16;
+  var IPV=[
+    40,8,48,16,56,24,64,32,
+    39,7,47,15,55,23,63,31,
+    38,6,46,14,54,22,62,30,
+    37,5,45,13,53,21,61,29,
+    36,4,44,12,52,20,60,28,
+    35,3,43,11,51,19,59,27,
+    34,2,42,10,50,18,58,26,
+    33,1,41,9,49,17,57,25
+  ];     var cyberbits=""; j=0;
+            for(j=0;j<64;j++){
+                var v=IPV[j];
+                cyberbits+=fusion[v-1]; } 
+             var c=[];
+             c[0]=cyberbits.slice(0,4);
+             c[1]=cyberbits.slice(4,8);
+             c[2]=cyberbits.slice(8,12);
+             c[3]=cyberbits.slice(12,16);
+             c[4]=cyberbits.slice(16,20);
+             c[5]=cyberbits.slice(20,24);
+             c[6]=cyberbits.slice(24,28);
+             c[7]=cyberbits.slice(28,32);
+             c[8]=cyberbits.slice(32,36);
+             c[9]=cyberbits.slice(36,40);
+             c[10]=cyberbits.slice(40,44);
+             c[11]=cyberbits.slice(44,48);
+            c[12]=cyberbits.slice(48,52);
+            c[13]=cyberbits.slice(52,56);
+             c[14]=cyberbits.slice(56,60);
+             c[15]=cyberbits.slice(60,64);
+             var cybertext="";
+            for(t=0;t<16;t++){
+       switch(c[t]){
+        case "0000":
+           cybertext+="0"
+           break;
+           case "0001":
+           cybertext+="1";break;
+            case "0010": 
+            cybertext+="2";break;
+            case "0011":
+            cybertext+="3";break;
+                case "0100":
+                cybertext+="4"; break;
+           case "0101":
+           cybertext+="5";break;
+            case "0110": 
+            cybertext+="6";break;
+            case "0111":
+           cybertext+="7";break;
+                case "1000":
+                cybertext+="8";
+           break;
+           case "1001":
+           cybertext+="9";break;
+            case "1010": 
+            cybertext+="A";break;
+            case "1011":
+            cybertext+="B";break;
+                case "1100":
+                cybertext+="C";  break;
+           case "1101":
+           cybertext+="D";break;
+            case "1110": 
+           cybertext+="E" ;break;
+            case "1111":
+            cybertext+="F";break; }}
+            document.getElementById("cybertext").innerHTML=cybertext;
+              return true;}        </script></body></html>
